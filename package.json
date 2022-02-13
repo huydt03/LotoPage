@@ -1,0 +1,22 @@
+{
+  "name": "drhuy-loto-page",
+  "version": "1.0.0",
+  "description": "page loto game",
+  "main": "src/LotoPage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huydt03/LotoPage.git"
+  },
+  "author": "drhuy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huydt03/LotoPage/issues"
+  },
+  "homepage": "https://github.com/huydt03/LotoPage#readme",
+  "dependencies": {
+    "drhuy-event-handler": "^1.0.0"
+  }
+}
