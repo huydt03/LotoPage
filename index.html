@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style type="text/css">
+		header, header div{
+			display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		}
+		header div{
+			padding: 8px;
+			justify-content: left;
+		}
+		header div input{
+			width: 100%;
+			max-width: 100px;
+			min-width: 20px;
+		}
+		#pages{
+			background: #ccc;
+			overflow-y: scroll;
+			height: calc(100vh - 44px);
+		}
+		.loto-page{
+			float: left;
+		    width: 14vw !important;
+    		height: 16vw !important;
+    		padding: 6px !important;
+		}
+		.loto-page .has-num{
+		    font-size: 10px !important;
+		}
+	</style>
+</head>
+<body>
+
+	<header>
+		<div>
+			<input type="range" min="1" max="100" value="14" onchange="initPages(event)" oninput="this.nextElementSibling.value = this.value">
+			<output>14</output>
+		</div>
+
+		<div>Màu: <input value="#3B6168" type="color" oninput="
+			let value = this.value;
+			let r = document.querySelector('#root');
+			r.innerHTML = `
+			.page-num{
+			    background: ${value};
+			}`;
+		" /></div>
+		<div>Mã số: <input value="" /></div>
+		
+		<div onclick="printDiv()" class="oc-icon-print" style="font-size: 20px; text-align: end; cursor: pointer;">In giấy</div>
+	</header>
+	<div id="pages-printer">
+		<style type="text/css" id="root">
+			.page-num{
+			    background-color: #3B6168;
+			}
+		</style>
+		<style type="text/css">
+			@media print {
+				* {
+					color-adjust: exact !important; 
+					-webkit-print-color-adjust: exact !important; 
+					print-color-adjust: exact !important; 
+				}
+
+				.has-num div{
+					transform: scale(1.4, 2.2);
+				}
+			}
+			*{
+			    box-sizing: border-box;
+			}
+			body{
+				margin: 0;
+			}
+			.loto-page{
+				background: #fff;
+				display: table;
+			    width: 100%;
+			    height: 100%;
+			    text-align: center;
+			    user-select: none;
+			    padding: 12px;
+			    border: 1px solid;
+			    height: 100vh;
+			}
+			.page-row{
+				display: table-row;
+			}
+			*[row-empty]{
+				height: 6%;
+			}
+			.page-num{
+				display: table-cell;
+				border: 1px solid #000;
+				vertical-align: middle;
+				font-size: 2em;
+				font-weight: bold;
+				width: calc(100%/11);
+			}
+			.has-num{
+				cursor: pointer;
+				background: #fff;
+			}
+			.has-num[active="true"]{
+				color: red;
+			}
+		</style>
+		<div id="pages"></div>
+	</div>
+
+	<script type="text/javascript" src="Page.js"></script>
+	<script type="text/javascript" src="PageUI.js"></script>
+
+	<script type="text/javascript">
+
+		function printDiv() { 
+	        var divContents = document.getElementById("pages-printer").innerHTML; 
+	        var a = window.open('', '', 'height=500, width=500'); 
+	        a.document.write('<html>'); 
+	        a.document.write('<body >'); 
+	        a.document.write(divContents); 
+	        a.document.write('</body></html>'); 
+	        a.document.close(); 
+	        a.print(); 
+	    } 
+
+		let Pages = (()=>{
+			let target_pages = document.querySelector('#pages');
+
+			function clear(){
+				target_pages.innerHTML = '';
+			}
+
+			function add(){
+				let page = new Page;
+				let target_page = PageUI(page.page);
+				target_pages.append(target_page.target);
+			}
+
+			function update(length){
+				clear();
+				for(let i = 0; i < length; i++)
+					add();
+			}
+
+			return {
+				get update(){ return update; }
+			}
+
+		})();
+
+		function initPages(e){
+			let length = e.target.value;
+			Pages.update(length);
+		}
+		initPages({target: {value: 14}})
+	</script>
+</body>
+</html>
