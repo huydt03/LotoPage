@@ -39,8 +39,7 @@
 
 	<header>
 		<div>
-			<input type="range" min="1" max="100" value="14" onchange="initPages(event)" oninput="this.nextElementSibling.value = this.value">
-			<output>14</output>
+			<input type="text" placeholder="n pages" onchange="initPages(event)" />
 		</div>
 
 		<div>Màu: <input value="#3B6168" type="color" oninput="
@@ -54,16 +53,14 @@
 
 
 		<div>
-			<input type="range" min="0" max="100" value="100" oninput="
-			this.nextElementSibling.value = this.value
+			<input type="text" placeholder="p height 0-100" onchange="
 			let value = this.value;
 			let r = document.querySelector('#root2');
 			r.innerHTML = `
 			.loto-page{
-			    height: calc(100*${value/100}vh);
+			    height: ${value}vh;
 			}`;
-		" />
-			<output>100</output></div>
+		" /></div>
 		
 		<div onclick="printDiv()" class="oc-icon-print" style="font-size: 20px; text-align: end; cursor: pointer;">In giấy</div>
 	</header>
